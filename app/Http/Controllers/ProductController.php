@@ -24,7 +24,7 @@ class ProductController extends Controller
             "name"=>"required",
             "qnt"=> "required|numeric",
             "price"=> "required|decimal:0,2",
-            "document"=>"required|mimes:pdf,jpg,png,txt,docx,xlsx",
+            "document"=>"required|mimes:jpg,png",
             "description"=> "nullable"
         ]);
 
@@ -64,7 +64,7 @@ class ProductController extends Controller
             "name"=>"required",
             "qnt"=> "required|numeric",
             "price"=> "required|decimal:0,2",
-            "document"=>"required|mimes:pdf,jpg,png,txt,docx,xlsx",
+            "document"=>"required|mimes:jpg,png",
             "description"=> "nullable"
         ]);
 
