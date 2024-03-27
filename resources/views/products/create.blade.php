@@ -39,8 +39,10 @@
                 <input type="text" class="form-control" id="price" name="price" placeholder="Product Price">
             </div>
             <div class="mb-3">
-                <label for="document" class="form-label">Upload document:</label>
-                <input type="file" class="form-control" id="document" name="document" placeholder="Upload document"></input>
+                <label for="image" class="form-label">Upload document:</label>
+                <input type="file" class="form-control" id="image" name="image" placeholder="Upload document"></input>
+
+                <img id="previewImage" src="#" class="mt-3" alt="Preview Image" style="display: none; max-width: 200px; max-height: 200px;">
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Description:</label>
@@ -53,6 +55,19 @@
 
         </form>
     </div>
+
+    <script>
+        document.getElementById('image').addEventListener('change', function(event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('previewImage').src = e.target.result;
+                document.getElementById('previewImage').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        });
+    </script>
+
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>

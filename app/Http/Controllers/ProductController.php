@@ -1,16 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Product;
-
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\File;
 class ProductController extends Controller
 {
     public function index() {
-        $Products = Product::all();
-        return view("products.index", ["products"=> $Products]);
+        $products = Product::all();
+        return view("products.index", ["products"=> $products]);
     }
 
     public function create() {
@@ -24,7 +22,7 @@ class ProductController extends Controller
             "name"=>"required",
             "qnt"=> "required|numeric",
             "price"=> "required|decimal:0,2",
-            "document"=>"required|mimes:jpg,png",
+            "image"=>"required|image|mimes:jpeg,png,jpg,gif|max:2048",
             "description"=> "nullable"
         ]);
 
@@ -33,9 +31,9 @@ class ProductController extends Controller
         $qnt = $request -> input("qnt");
         $price = $request -> input("price");
         // store file in : storage/app/public folder
-        $file = $request->file("document");
-        $fileName = $file->getClientOriginalName();
-        $filePath = $file->store('uploads', 'public');
+        $filename = time().'.'.$request->image->extension();
+        $request->file('image')->move('Products', $filename);
+        
         $description = $request -> input('description');
 
         // store file information in database
@@ -43,11 +41,11 @@ class ProductController extends Controller
         $uploadedData -> name = $name;
         $uploadedData -> qnt = $qnt;
         $uploadedData -> price = $price;
-        $uploadedData->filename = $fileName;
-        $uploadedData->original_name = $file->getClientOriginalName();
-        $uploadedData->file_path = $filePath;
+        $uploadedData->image = $filename;
         $uploadedData -> description = $description;
         $uploadedData->save();
+
+        // $image = asset('storage/' . $filename);
 
         return redirect(route('product.index'))->with('success','Product added successfully!');
         // return redirect()->with('success','Product added successfully');
@@ -64,31 +62,44 @@ class ProductController extends Controller
             "name"=>"required",
             "qnt"=> "required|numeric",
             "price"=> "required|decimal:0,2",
-            "document"=>"required|mimes:jpg,png",
+            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
             "description"=> "nullable"
         ]);
 
-        $name = $request -> input("name");
-        $qnt = $request -> input("qnt");
-        $price = $request -> input("price");
-        // store file in : storage/app/public folder
-        $file = $request->file("document");
-        $fileName = $file->getClientOriginalName();
-        $filePath = $file->store('uploads', 'public');
-        $description = $request -> input('description');
+        $product = Product::find($product->id);
+        $product->name = $data["name"];
+        $product->qnt = $data["qnt"];
+        $product->price = $data["price"];
+        $product->description = $data["description"];
 
-        // store file information in database
-        $uploadedData = new Product() ;
-        $uploadedData -> name = $name;
-        $uploadedData -> qnt = $qnt;
-        $uploadedData -> price = $price;
-        $uploadedData->filename = $fileName;
-        $uploadedData->original_name = $file->getClientOriginalName();
-        $uploadedData->file_path = $filePath;
-        $uploadedData -> description = $description;
-        $uploadedData->update();
 
-        return redirect(route("product.index"))->with("success","Product Updated Successfully!");
+        if ($request->hasFile('image')) {
+            File::delete(public_path('Products/'. $product->image));
+            $filename = time().'.'.$request->image->extension();
+            $request->file('image')->move('Products', $filename);
+            $product->image = $filename;
+        }
+
+        $product->save();
+        // $name = $request -> input("name");
+        // $qnt = $request -> input("qnt");
+        // $price = $request -> input("price");
+        // // store file in : storage/app/public folder
+        // $image = $request->file("image");
+        // $description = $request -> input('description');
+
+        // // store file information in database
+        // $uploadedData = new Product() ;
+        // $uploadedData -> name = $name;
+        // $uploadedData -> qnt = $qnt;
+        // $uploadedData -> price = $price;
+        // $uploadedData -> image = $image;
+        // $uploadedData -> description = $description;
+        // $uploadedData -> update();
+
+        // $image = asset('storage/image/' . $image);
+
+        return redirect(route("product.index"))->with("success", "Product Updated Successfully!");
     }
 
     public function destroy(Product $product) {

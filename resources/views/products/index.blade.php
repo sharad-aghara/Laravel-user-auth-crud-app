@@ -52,9 +52,9 @@
                 <th>ID</th>
                 <th>Quantity</th>
                 <th>Price</th>
-                <th>File Name</th>
-                <th>Uploaded At</th>
-                <th>Download</th>
+                <th>Image</th>
+                <!-- <th>Uploaded At</th> -->
+                <!-- <th>Download</th> -->
                 <th>Description</th>
                 <td>Edit</td>
                 <td>Delete</td>
@@ -68,17 +68,17 @@
                 <td>{{$product->id}}</td>
                 <td>{{$product->qnt}}</td>
                 <td>{{$product->price}}</td>
-                <td>{{$product->original_name}}</td>
-                <td>{{$product->file_path}}</td>
-                <td> <a class="btn btn-primary" href="{{ \Illuminate\Support\Facades\Storage::url($products) }}" download>Download</a></td>
+                <td>
+                    @if($product->image)
+                        <img src="{{ asset('Products/' . $product->image) }}" alt="Uploaded Image" width="150" height="150">
+                    @endif
+                </td>
+                <!-- <td> <a class="btn btn-primary" href="{{ \Illuminate\Support\Facades\Storage::url($products) }}" download>Download</a></td> -->
                 <td>{{$product->description}}</td>
                 <td><a href="{{route('product.edit', ['product' => $product])}}" class="btn btn-primary">Edit</a></td>
                 <td>
-                    <form action="{{route('product.destroy', ['product' => $product])}}" method="post">
-                        @csrf
-                        @method('delete')
-                        <button class="btn btn-danger">Delete</button>
-                    </form>
+                <a onclick="return confirm('Are you sure?')" href="{{route('product.destroy', ['product' => $product])}}" class="btn btn-danger">Delete</a>
+
                 </td>
             </tr>
             @endforeach
@@ -94,5 +94,7 @@
             }
         } );
     </script>
+
+
 </body>
 </html>         
