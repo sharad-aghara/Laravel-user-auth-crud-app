@@ -6,32 +6,31 @@ This Laravel application serves as a product management system, allowing users t
 
 1. Clone the repository to your local machine:
 
-git clone <repository-url>
+```git clone <repository-url>```
 
 
 2. Install composer dependencies:
 
-composer install
-
+```composer install```
 
 3. Create a `.env` file by copying `.env.example` and update the database credentials:
 
-cp .env.example .env
+```cp .env.example .env```
 
 
 4. Generate an application key:
 
-php artisan key:generate
+```php artisan key:generate```
 
 
 5. Migrate the database to create necessary tables:
 
-php artisan migrate
+```php artisan migrate```
 
 
 6. Link the storage directory:
 
-php artisan storage:link
+```php artisan storage:link```
 
 
 
@@ -39,7 +38,7 @@ php artisan storage:link
 
 1. Start the development server:
 
-php artisan serve
+```php artisan serve```
 
 
 
