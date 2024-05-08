@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Ramsey\Uuid\Type\Decimal;
 class ProductController extends Controller
 {
     public function index() {
@@ -19,11 +20,11 @@ class ProductController extends Controller
         // dd($request -> all());   
 
         $data = $request -> validate([
-            "name"=>"required",
-            "qnt"=> "required|numeric",
-            "price"=> "required|decimal:0,2",
+            "name"=>"required|regex:/^[A-Za-z][A-Za-z0-9\s-]{0,19}$/",
+            "qnt"=> "required|numeric|between:1,999999999",
+            "price" => "required|numeric|between:1,999999999",
             "image"=>"required|image|mimes:jpeg,png,jpg,gif|max:2048",
-            "description"=> "nullable"
+            "description"=> "nullable|regex:/^[A-Za-z][A-Za-z0-9\s-]{0,500}$/"
         ]);
 
 
@@ -59,11 +60,11 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product) {
         $data = $request -> validate([
-            "name"=>"required",
-            "qnt"=> "required|numeric",
-            "price"=> "required|decimal:0,2",
+            "name"=>"required|regex:/^[A-Za-z][A-Za-z0-9\s-]{0,19}$/",
+            "qnt"=> "required|numeric|between:1,999999999",
+            "price" => "required|numeric|between:1,999999999",
             // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
-            "description"=> "nullable"
+            "description"=> "nullable|regex:/^[A-Za-z][A-Za-z0-9\s-]{0,500}$/"
         ]);
 
         $product = Product::find($product->id);
