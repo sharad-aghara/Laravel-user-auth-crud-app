@@ -28,25 +28,31 @@
             @method('post')
             <div class="mb-3">
                 <label for="name" class="form-label">Name:<span style="color: red;">*</span></label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Product Name">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Product Name" pattern="[A-Za-z][A-Za-z0-9\s-]{0,4}" title="Product name must start with an alphabetical character and be between 1 and 5 characters">
             </div>
+
             <div class="mb-3">
                 <label for="qnt" class="form-label">Quantity:<span style="color: red;">*</span></label>
                 <input type="text" class="form-control" id="qnt" name="qnt" placeholder="Product Quantity">
             </div>
+
             <div class="mb-3">
                 <label for="price" class="form-label">Price:<span style="color: red;">*</span></label>
-                <input type="text" class="form-control" id="price" name="price" placeholder="Product Price">
+                <input type="text" class="form-control" id="price" name="price" placeholder="Product Price" >
+                @error('price')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
+
             <div class="mb-3">
-                <label for="image" class="form-label">Upload document:</label>
+                <label for="image" class="form-label">Upload Product Image:<span style="color: red;">*</span></label>
                 <input type="file" class="form-control" id="image" name="image" placeholder="Upload document"></input>
 
                 <img id="previewImage" src="#" class="mt-3" alt="Preview Image" style="display: none; max-width: 200px; max-height: 200px;">
             </div>
             <div class="mb-3">
-                <label for="description" class="form-label">Description:</label>
-                <input type="text" class="form-control" id="description" name="description" placeholder="Product Description"></input>
+                <label for="description" class="form-label">Description: <span style="color: grey;">(optional)</span></label>
+                <textarea class="form-control" id="description" name="description" rows="4" placeholder="Product Description (Max 500 charactors)"></textarea>
             </div>
 
             <div class="mb-3">

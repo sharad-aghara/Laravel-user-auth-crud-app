@@ -38,13 +38,13 @@
             <input type="text" class="form-control" id="price" name="price" placeholder="Product Price" value="{{$product->price}}">
         </div>
         <div class="mb-3">
-            <label for="image" class="form-label">Upload document:</label>
+            <label for="image" class="form-label">Upload Product Image:<span style="color: red;">*</span></label>
             <input type="file" class="form-control" id="image" name="image" placeholder="Upload document"></input>
             <img id="previewImage" src="{{ asset('Products/' . $product->image) }}" class="mt-3" alt="Preview Image" style="max-width: 200px; max-height: 200px;" >
         </div>
         <div class="mb-3">
-            <label for="description" class="form-label">Description:</label>
-            <input type="text" class="form-control" id="description" name="description" placeholder="Product Description" value="{{$product->description}}"></input>
+            <label for="description" class="form-label">Description:<span style="color: grey;">(optional)</span></label>
+            <textarea class="form-control" id="description" name="description" rows="4" placeholder="Product Description (Max 500 charactors)">{{$product->description}}</textarea>
         </div>
 
         <div class="mb-3">

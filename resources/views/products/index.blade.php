@@ -49,12 +49,10 @@
             <tr class="table-dark">
                 <th>No</th>
                 <th>Product</th>
-                <th>ID</th>
+                <!-- <th>ID</th> -->
                 <th>Quantity</th>
                 <th>Price</th>
                 <th>Image</th>
-                <!-- <th>Uploaded At</th> -->
-                <!-- <th>Download</th> -->
                 <th>Description</th>
                 <td>Edit</td>
                 <td>Delete</td>
@@ -65,7 +63,7 @@
             <tr>
                 <td>{{$loop->iteration}}</td>
                 <td>{{$product->name}}</td>
-                <td>{{$product->id}}</td>
+                <!-- <td>{{$product->id}}</td> -->
                 <td>{{$product->qnt}}</td>
                 <td>{{$product->price}}</td>
                 <td>
